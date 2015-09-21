@@ -1,10 +1,19 @@
 memePattern = new RegExp('\/meme$', 'i');
 
+function showSlackyPopover(target) {
+  $('#slacky-popover')
+    .show();
+    
+  $('#meme-input').focus();
+}
+
 function attachDomEventListeners() {
    $('textarea, input').keyup(function(event) {
       var userText = $(event.target).val();
       var textJustTyped = userText.substring(0, doGetCaretPosition(event.target));
       if (memePattern.test(textJustTyped)) {
+        
+        showSlackyPopover($(event.target));
         
         console.log("Emitting memeDetected event");
         chrome.runtime.sendMessage({type: 'memeDetected', 

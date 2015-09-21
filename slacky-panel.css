@@ -5,6 +5,11 @@
   margin-top: 8px;
   padding-bottom: 0;
   margin-bottom: 0;
+  display: none;
+  position: absolute;
+  z-index: 1000;
+  right: 4px;
+  top: 0;
 }
 #slacky-popover input#meme-input {
   width: 100%;
@@ -37,4 +42,19 @@
   border-radius: 2px;
   display: block;
   padding: 4px;
+}
+
+#slacky-popover:after {
+  bottom: 100%;
+	right: 0;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(21, 188, 183, 0);
+	border-bottom-color: #15bcb7;
+	border-width: 7px;
+	margin-right: 35px;
 }
