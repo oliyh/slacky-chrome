@@ -1,6 +1,6 @@
 target = null;
 
-function init() {
+function initPanel() {
    $('#meme-input')
       .val('')
       .keyup(function(event) {
@@ -9,7 +9,7 @@ function init() {
             $('#error').text('').hide();
             $('#meme').attr('src', 'loading.gif').show();
             
-            chrome.runtime.sendMessage({event: "memeRequest",
+            chrome.runtime.sendMessage({event: 'memeRequest',
                                         target: target,
                                         memeRequest: $(this).val()}, function(response) {
               console.log(response);
@@ -42,10 +42,4 @@ function init() {
          .show();
    });
 */
-
 }
-
-document.addEventListener('DOMContentLoaded', function() {
-  console.log('loaded popup');
-  init();
-});

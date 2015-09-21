@@ -10,7 +10,7 @@ function memeDetected(request, sendResponse) {
 function init() {
   chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
-        switch(request.type) {          
+        switch(request.event) {          
           case 'requestPanelContent':
               requestPanelContent(request, sendResponse);
               break;

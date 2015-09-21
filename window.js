@@ -1,10 +1,20 @@
 memePattern = new RegExp('\/meme$', 'i');
+target = null;
 
 function showSlackyPopover(target) {
+  this.target = target;
+  
   $('#slacky-popover')
     .show();
     
   $('#meme-input').focus();
+}
+
+function hideSlackyPopover() {
+    $('#slacky-popover')
+    .hide();
+    
+    target.focus();
 }
 
 function attachDomEventListeners() {
@@ -16,7 +26,7 @@ function attachDomEventListeners() {
         showSlackyPopover($(event.target));
         
         console.log("Emitting memeDetected event");
-        chrome.runtime.sendMessage({type: 'memeDetected', 
+        chrome.runtime.sendMessage({event: 'memeDetected', 
                                     target: $(event.target).attr('id')}, 
                                     function(response) {
                                       var target = $('#' + response.target);
@@ -26,11 +36,34 @@ function attachDomEventListeners() {
    });
 }
 
+function initSlackyPanel() {
+   $('#meme-input')
+      .val('')
+      .keyup(function(event) {
+         if (event.which == 13) {
+            console.log('meme pattern completed');
+            $('#error').text('').hide();
+            $('#meme').attr('src', 'loading.gif').show();
+            
+            chrome.runtime.sendMessage({event: 'memeRequest',
+                                        target: target,
+                                        memeRequest: $(this).val()}, 
+                                        function(response) {
+                                          console.log(response);
+                                        });
+         } else if (event.which == 27) {
+            console.log('user pressed esc');
+            hideSlackyPopover();
+         }
+      });
+}
+
 function attachSlackyPanel() {
-  chrome.runtime.sendMessage({type: 'requestPanelContent'}, 
+  chrome.runtime.sendMessage({event: 'requestPanelContent'}, 
                              function(response) {
                                 var body = response.body;
                                 $(document.body).append(body);
+                                initSlackyPanel();
                              });
 }
 
