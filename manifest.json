@@ -5,16 +5,16 @@
   "description": "Create all the memes directly from your browser",
   "version": "1.0",
   "browser_action": {
-    "default_icon": "slacky-64.png",
-    "default_popup": "slacky-panel.html"
+    "default_icon": "slacky-64.png"
   },
   "background": {
-    "scripts": ["index.js"]
+    "page": "background.html"
   },
   "content_scripts": [
     {
-      "matches": ["http://*/*", "https://*/*"],
-      "js": ["jquery.js", "utils.js", "window.js"]
+      "matches": ["http://*/*", "https://*/*", "file://*/*"],
+      "js": ["jquery.js", "utils.js", "window.js"],
+      "css": ["slacky-panel.css"]
     }
   ],
   "permissions": [
