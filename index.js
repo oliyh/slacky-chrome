@@ -3,12 +3,18 @@ function requestPanelContent(request, sendResponse) {
 }
 
 function memeRequest(request, sendResponse) {
-   $.post(
-      {url: 'https://slacky-server.herokuapp.com/api/meme',
-       body: {text: request.memeRequest},
-       success: function(response) { // this should be on complete and then i dispatch on response code
-          sendResponse({memeUrl: response.text,
+   console.log('posting to slacky');
+   $.ajax(
+      {type: "POST",
+       url: 'https://slacky-server.herokuapp.com/api/meme',
+       data: {text: request.memeRequest},
+       success: function(response) {
+          console.log('meme returned!');
+          sendResponse({memeUrl: response,
                         target: request.target});
+       },
+       error: function(xhr, status, errorMsg) {
+          console.log('something went wrong');
        }});
 }
 

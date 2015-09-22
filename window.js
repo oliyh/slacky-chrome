@@ -26,11 +26,7 @@ function attachDomEventListeners() {
 
         console.log("Emitting memeDetected event");
         chrome.runtime.sendMessage({event: 'memeDetected',
-                                    target: $(event.target).attr('id')},
-                                    function(response) {
-                                      var target = $('#' + response.target);
-                                      target.val(target.val().replace(memePattern, response.memeUrl));
-                                    });
+                                    target: $(event.target).attr('id')});
       }
    });
 }
@@ -45,10 +41,13 @@ function initSlackyPanel() {
             $('#meme').attr('src', 'loading.gif').show();
 
             chrome.runtime.sendMessage({event: 'memeRequest',
-                                        target: target,
+                                        target: target.attr('id'),
                                         memeRequest: $(this).val()},
                                         function(response) {
-                                          console.log(response);
+                                           console.log('meme response recieved');
+                                           $('#meme').attr('src', response.memeUrl).show();
+                                           var target = $('#' + response.target);
+                                           target.val(target.val().replace(memePattern, response.memeUrl));
                                         });
          } else if (event.which == 27) {
             console.log('user pressed esc');
