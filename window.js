@@ -31,6 +31,13 @@ function attachDomEventListeners() {
    });
 }
 
+function onMemeGenerated(response) {
+   console.log('meme response recieved');
+   $('#meme').attr('src', response.memeUrl).show();
+   var target = $('#' + response.target);
+   target.val(target.val().replace(memePattern, response.memeUrl));
+};
+
 function initSlackyPanel() {
    $('#meme-input')
       .val('')
@@ -43,12 +50,7 @@ function initSlackyPanel() {
             chrome.runtime.sendMessage({event: 'memeRequest',
                                         target: target.attr('id'),
                                         memeRequest: $(this).val()},
-                                        function(response) {
-                                           console.log('meme response recieved');
-                                           $('#meme').attr('src', response.memeUrl).show();
-                                           var target = $('#' + response.target);
-                                           target.val(target.val().replace(memePattern, response.memeUrl));
-                                        });
+                                        onMemeGenerated);
          } else if (event.which == 27) {
             console.log('user pressed esc');
             hideSlackyPopover();
@@ -65,10 +67,25 @@ function attachSlackyPanel() {
                              });
 }
 
+function registerMemeEventListeners() {
+  chrome.runtime.onMessage.addListener(
+    function(request, sender, sendResponse) {
+        switch(request.event) {
+          case 'memeGenerated':
+              onMemeGenerated(request);
+              break;
+
+          default:
+              console.log('Unknown event: ' + request + sender);
+        }
+    });
+}
+
 function init() {
    console.log("Hello world, slacky is here!");
    attachDomEventListeners();
    attachSlackyPanel();
+   registerMemeEventListeners();
 }
 
 init();
