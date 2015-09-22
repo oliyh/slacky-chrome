@@ -2,23 +2,28 @@ function requestPanelContent(request, sendResponse) {
   sendResponse({body: document.getElementById('slacky-panel').innerHTML});
 }
 
-function memeDetected(request, sendResponse) {
-  sendResponse({memeUrl: "http://static.fjcdn.com/pictures/It+s+an+old+meme+how+i+feel+when+i+see_e83de6_3481193.jpg",
-                target: request.target});
+function memeRequest(request, sendResponse) {
+   $.post(
+      {url: 'https://slacky-server.herokuapp.com/api/meme',
+       body: {text: request.memeRequest},
+       success: function(response) { // this should be on complete and then i dispatch on response code
+          sendResponse({memeUrl: response.text,
+                        target: request.target});
+       }});
 }
 
 function init() {
   chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
-        switch(request.event) {          
+        switch(request.event) {
           case 'requestPanelContent':
               requestPanelContent(request, sendResponse);
               break;
-              
-          case 'memeDetected':
-              memeDetected(request, sendResponse);
+
+          case 'memeRequest':
+              memeRequest(request, sendResponse);
               break;
-              
+
           default:
               console.log('Unknown event: ' + request + sender);
         }
@@ -27,4 +32,3 @@ function init() {
 }
 
 init();
-  

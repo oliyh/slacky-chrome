@@ -2,19 +2,18 @@ memePattern = new RegExp('\/meme$', 'i');
 target = null;
 
 function showSlackyPopover(target) {
-  this.target = target;
-  
-  $('#slacky-popover')
-    .show();
-    
-  $('#meme-input').focus();
+   this.target = target;
+
+   $('#meme').attr('src', 'loading.gif').hide();
+   $('#meme-input').val('');
+   $('#error').text('').hide();
+   $('#slacky-popover').show();
+   $('#meme-input').focus();
 }
 
 function hideSlackyPopover() {
-    $('#slacky-popover')
-    .hide();
-    
-    target.focus();
+   $('#slacky-popover').hide();
+   target.focus();
 }
 
 function attachDomEventListeners() {
@@ -22,12 +21,12 @@ function attachDomEventListeners() {
       var userText = $(event.target).val();
       var textJustTyped = userText.substring(0, doGetCaretPosition(event.target));
       if (memePattern.test(textJustTyped)) {
-        
+
         showSlackyPopover($(event.target));
-        
+
         console.log("Emitting memeDetected event");
-        chrome.runtime.sendMessage({event: 'memeDetected', 
-                                    target: $(event.target).attr('id')}, 
+        chrome.runtime.sendMessage({event: 'memeDetected',
+                                    target: $(event.target).attr('id')},
                                     function(response) {
                                       var target = $('#' + response.target);
                                       target.val(target.val().replace(memePattern, response.memeUrl));
@@ -44,10 +43,10 @@ function initSlackyPanel() {
             console.log('meme pattern completed');
             $('#error').text('').hide();
             $('#meme').attr('src', 'loading.gif').show();
-            
+
             chrome.runtime.sendMessage({event: 'memeRequest',
                                         target: target,
-                                        memeRequest: $(this).val()}, 
+                                        memeRequest: $(this).val()},
                                         function(response) {
                                           console.log(response);
                                         });
@@ -59,7 +58,7 @@ function initSlackyPanel() {
 }
 
 function attachSlackyPanel() {
-  chrome.runtime.sendMessage({event: 'requestPanelContent'}, 
+  chrome.runtime.sendMessage({event: 'requestPanelContent'},
                              function(response) {
                                 var body = response.body;
                                 $(document.body).append(body);
