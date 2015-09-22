@@ -49,8 +49,7 @@ function initSlackyPanel() {
 
             chrome.runtime.sendMessage({event: 'memeRequest',
                                         target: target.attr('id'),
-                                        memeRequest: $(this).val()},
-                                        onMemeGenerated);
+                                        memeRequest: $(this).val()});
          } else if (event.which == 27) {
             console.log('user pressed esc');
             hideSlackyPopover();
