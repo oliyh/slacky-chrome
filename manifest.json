@@ -22,5 +22,5 @@
     "http://*/*",
     "https://*/*"
   ],
-  "web_accessible_resources": ["businesscat.png"]
+  "web_accessible_resources": ["businesscat.png", "loading.gif"]
 }

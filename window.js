@@ -1,10 +1,10 @@
-memePattern = new RegExp('\/meme$', 'i');
+memePattern = new RegExp('\/meme', 'i');
 target = null;
 
 function showSlackyPopover(target) {
    this.target = target;
 
-   $('#meme').attr('src', 'loading.gif').hide();
+   $('#meme').attr('src', chrome.extension.getURL('loading.gif')).hide();
    $('#meme-input').val('');
    $('#error').text('').hide();
    $('#slacky-popover').show();
@@ -59,7 +59,7 @@ function initSlackyPanel() {
          if (event.which == 13) {
             console.log('meme pattern completed');
             $('#error').text('').hide();
-            $('#meme').attr('src', 'loading.gif').show();
+            $('#meme').attr('src', chrome.extension.getURL('loading.gif')).show();
 
             chrome.runtime.sendMessage({event: 'memeRequest',
                                         target: target.attr('id'),

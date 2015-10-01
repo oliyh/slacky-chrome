@@ -10,11 +10,15 @@
   z-index: 1000;
   right: 4px;
   top: 0;
+  font-family: Arial;
+  font-size: 16px;
 }
 #slacky-popover input#meme-input {
   width: 100%;
   font-size: 2em;
   padding: 0;
+  font-family: Arial;
+  box-sizing: border-box;
 }
 #slacky-popover img#meme {
   display: block;
