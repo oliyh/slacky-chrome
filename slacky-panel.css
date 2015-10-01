@@ -14,6 +14,7 @@
 #slacky-popover input#meme-input {
   width: 100%;
   font-size: 2em;
+  padding: 0;
 }
 #slacky-popover img#meme {
   display: block;
@@ -25,7 +26,7 @@
   border: 1px solid white;
 }
 #slacky-popover div {
-  background-image: url('businesscat.png');
+  background-image: url('chrome-extension://__MSG_@@extension_id__/businesscat.png');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: bottom;

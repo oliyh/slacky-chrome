@@ -11,11 +11,21 @@ function memeRequest(request, tabId) {
        success: function(response) {
           console.log('meme returned!');
           chrome.tabs.sendMessage(tabId, {event: 'memeGenerated',
-                               target: request.target,
-                               memeUrl: response});
+                                          target: request.target,
+                                          memeUrl: response});
        },
        error: function(xhr, status, errorMsg) {
-          console.log('something went wrong');
+         switch (xhr.status) {
+           case 400:
+            chrome.tabs.sendMessage(tabId, {event: 'badMemeRequest',
+                                            helpText: xhr.responseText});
+            break;
+            
+            default:
+            chrome.tabs.sendMessage(tabId, {event: 'memeGenerationFailed',
+                                            errorMsg: xhr.responseText});
+            break;
+         }
        }});
 }
 

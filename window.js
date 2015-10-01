@@ -36,7 +36,21 @@ function onMemeGenerated(response) {
    $('#meme').attr('src', response.memeUrl).show();
    var target = $('#' + response.target);
    target.val(target.val().replace(memePattern, response.memeUrl));
-};
+}
+   
+function onBadMemeRequest(response) {
+   $('#meme').hide();
+   $('#error')
+    .html(response.helpText.replace(/\n/g, '<br/>'))
+    .show();
+}
+
+function onMemeGenerationFailed(response) {
+   $('#meme').hide();
+   $('#error')
+    .html(response.errorMsg.replace(/\n/g, '<br/>'))
+    .show();
+}
 
 function initSlackyPanel() {
    $('#meme-input')
@@ -72,6 +86,14 @@ function registerMemeEventListeners() {
         switch(request.event) {
           case 'memeGenerated':
               onMemeGenerated(request);
+              break;
+              
+          case 'badMemeRequest':
+              onBadMemeRequest(request);
+              break;
+              
+          case 'memeGenerationFailed':
+              onMemeGenerationFailed(request);
               break;
 
           default:
