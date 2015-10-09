@@ -5,7 +5,7 @@
   margin-top: 8px;
   padding-bottom: 0;
   margin-bottom: 0;
-  display: none;
+  display: block;
   position: absolute;
   z-index: 1000;
   right: 4px;
@@ -29,7 +29,24 @@
   max-height: 220px;
   border: 1px solid white;
 }
-#slacky-popover div {
+#slacky-popover #meme-controls {
+    align: center;
+    position: absolute;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    width: 100%;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    right:0
+}
+#slacky-popover #meme-url {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+}
+
+#slacky-popover div:first-child {
   background-image: url('chrome-extension://__MSG_@@extension_id__/businesscat.png');
   background-size: cover;
   background-repeat: no-repeat;

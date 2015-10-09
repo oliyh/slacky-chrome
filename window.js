@@ -8,6 +8,8 @@ function showSlackyPopover(target) {
    $('#meme-input').val('');
    $('#error').text('').hide();
    $('#slacky-popover').show();
+   $('#meme-controls').hide();
+   $('#meme-url').val('');
    $('#meme-input').focus();
 }
 
@@ -36,8 +38,10 @@ function onMemeGenerated(response) {
    $('#meme').attr('src', response.memeUrl).show();
    var target = $('#' + response.target);
    target.val(target.val().replace(memePattern, response.memeUrl));
+   $('#meme-url').val(response.memeUrl);
+   $('#meme-controls').show();
 }
-   
+
 function onBadMemeRequest(response) {
    $('#meme').hide();
    $('#error')
@@ -87,11 +91,11 @@ function registerMemeEventListeners() {
           case 'memeGenerated':
               onMemeGenerated(request);
               break;
-              
+
           case 'badMemeRequest':
               onBadMemeRequest(request);
               break;
-              
+
           case 'memeGenerationFailed':
               onMemeGenerationFailed(request);
               break;
