@@ -73,6 +73,13 @@ function initSlackyPanel() {
             hideSlackyPopover();
          }
       });
+      
+  $('#copy-meme-url').click(function (e) {
+      var range = document.createRange();
+      range.selectNode($('#meme-url')[0]);
+      window.getSelection().addRange(range);
+      var success = document.execCommand('copy');
+  });
 }
 
 function attachSlackyPanel() {
