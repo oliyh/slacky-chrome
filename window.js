@@ -75,10 +75,9 @@ function initSlackyPanel() {
       });
       
   $('#copy-meme-url').click(function (e) {
-      var range = document.createRange();
-      range.selectNode($('#meme-url')[0]);
-      window.getSelection().addRange(range);
+      $('#meme-url').select();
       var success = document.execCommand('copy');
+      console.log(success ? 'url copied' : 'could not copy url');
   });
 }
 
