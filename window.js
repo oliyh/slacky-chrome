@@ -34,7 +34,6 @@ function attachDomEventListeners() {
 }
 
 function onMemeGenerated(response) {
-   console.log('meme response recieved');
    $('#meme').attr('src', response.memeUrl).show();
    var target = $('#' + response.target);
    target.val(target.val().replace(memePattern, response.memeUrl));
@@ -66,7 +65,7 @@ function initSlackyPanel() {
             $('#meme').attr('src', chrome.extension.getURL('loading.gif')).show();
 
             chrome.runtime.sendMessage({event: 'memeRequest',
-                                        target: $(event.target).attr('id'),
+                                        target: target.attr('id'),
                                         memeRequest: $(this).val()});
          } else if (event.which == 27) {
             console.log('user pressed esc');
