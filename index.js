@@ -1,3 +1,5 @@
+clientId = null;
+
 function requestPanelContent(request, sendResponse) {
   sendResponse({body: document.getElementById('slacky-panel').innerHTML});
 }
@@ -6,8 +8,9 @@ function memeRequest(request, tabId) {
    console.log('posting to slacky');
    $.ajax(
       {type: "POST",
-       url: 'https://slacky-server.herokuapp.com/api/meme',
-       data: {text: request.memeRequest},
+       url: 'https://slacky-server.herokuapp.com/api/browser-plugin/meme',
+       data: {text: request.memeRequest,
+              token: clientId},
        success: function(response) {
           console.log('meme returned!');
           chrome.tabs.sendMessage(tabId, {event: 'memeGenerated',
@@ -47,6 +50,19 @@ function init() {
         
         return true;
     });
+    
+  chrome.storage.sync.get('clientId', function(items) {
+    var cid = items.clientId;
+    if (cid) {
+        clientId = cid;
+    } else {
+        cid = getRandomToken();
+        chrome.storage.sync.set({clientId: cid}, function() {
+            clientId = cid;
+        });
+    }
+    console.log('clientId ' + clientId);
+  });
   console.log('background page loaded');
 }
 
