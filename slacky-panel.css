@@ -1,6 +1,6 @@
 #slacky-popover {
   width: 360px;
-  height: 272px;
+  height: 292px;
   background-color: #15bcb7;
   margin-top: 8px;
   padding-bottom: 0;
@@ -30,20 +30,16 @@
   border: 1px solid white;
 }
 #slacky-popover #meme-controls {
-    align: center;
     position: absolute;
     bottom: 0;
     background: rgba(255, 255, 255, 0.8);
     width: 100%;
-    text-align: center;
     padding: 0;
     margin: 0;
     right:0
 }
 #slacky-popover #meme-url {
-    width: 100%;
-    position: absolute;
-    bottom: 0;
+    width: 54%;
 }
 
 #slacky-popover div:first-child {

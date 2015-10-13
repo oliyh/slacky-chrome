@@ -66,7 +66,7 @@ function initSlackyPanel() {
             $('#meme').attr('src', chrome.extension.getURL('loading.gif')).show();
 
             chrome.runtime.sendMessage({event: 'memeRequest',
-                                        target: target.attr('id'),
+                                        target: $(event.target).attr('id'),
                                         memeRequest: $(this).val()});
          } else if (event.which == 27) {
             console.log('user pressed esc');
