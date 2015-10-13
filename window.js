@@ -15,7 +15,6 @@ function showSlackyPopover(target) {
 
 function hideSlackyPopover() {
    $('#slacky-popover').hide();
-   target.focus();
 }
 
 function attachDomEventListeners() {
@@ -70,6 +69,7 @@ function initSlackyPanel() {
          } else if (event.which == 27) {
             console.log('user pressed esc');
             hideSlackyPopover();
+            target.focus();
          }
       });
       
@@ -77,6 +77,16 @@ function initSlackyPanel() {
       $('#meme-url').select();
       var success = document.execCommand('copy');
       console.log(success ? 'url copied' : 'could not copy url');
+  });
+  
+  // hide slacky popover when click elsewhere
+  $('html').click(function() {
+    hideSlackyPopover();
+  });
+  
+  // stop clicks inside slacky popover from hiding it
+  $('#slacky-popover').click(function(e) {
+    e.stopPropagation();
   });
 }
 
