@@ -1,8 +1,26 @@
 clientId = null;
 
 function requestPanelContent(request, sendResponse) {
-  sendResponse({body: document.getElementById('slacky-panel').innerHTML,
-                memeHistory: [{url: 'http://i.memecaptain.com/gend_images/Dhdr_w.jpg'}, {url: 'http://i.memecaptain.com/gend_images/6Ao8JA.jpg'}]});
+  chrome.storage.sync.get('memeHistory', function(items) {
+    var memeHistory = items.memeHistory;
+    sendResponse({body: document.getElementById('slacky-panel').innerHTML,
+                  memeHistory: memeHistory || []});
+  });
+  
+}
+
+function storeMemeResult(result) {
+  chrome.storage.sync.get('memeHistory', function(items) {
+    var memeHistory = items.memeHistory;
+    if (!memeHistory) {
+        memeHistory = [];
+    }
+    memeHistory.push(result);
+    if (memeHistory.length > 10) {
+       memeHistory.shift();
+    }
+    chrome.storage.sync.set({memeHistory: memeHistory});
+  });
 }
 
 function memeRequest(request, tabId) {
@@ -14,6 +32,7 @@ function memeRequest(request, tabId) {
               token: clientId},
        success: function(response) {
           console.log('meme returned!');
+          storeMemeResult({url: response});
           chrome.tabs.sendMessage(tabId, {event: 'memeGenerated',
                                           target: request.target,
                                           memeUrl: response});
