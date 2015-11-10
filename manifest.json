@@ -13,15 +13,16 @@
   "content_scripts": [
     {
       "matches": ["http://*/*", "https://*/*", "file://*/*"],
-      "js": ["jquery.js", "utils.js", "window.js"],
-      "css": ["slacky-panel.css"]
+      "js": ["jquery.js", "utils.js", "vss.js", "window.js"],
+      "css": ["slacky-panel.css", "vss.css"]
     }
   ],
   "permissions": [
     "activeTab",
     "http://*/*",
     "https://*/*",
-    "storage"
+    "storage",
+    "clipboardWrite"
   ],
   "web_accessible_resources": ["businesscat.png", "loading.gif"]
 }

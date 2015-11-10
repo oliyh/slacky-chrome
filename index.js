@@ -1,7 +1,8 @@
 clientId = null;
 
 function requestPanelContent(request, sendResponse) {
-  sendResponse({body: document.getElementById('slacky-panel').innerHTML});
+  sendResponse({body: document.getElementById('slacky-panel').innerHTML,
+                memeHistory: [{url: 'http://i.memecaptain.com/gend_images/Dhdr_w.jpg'}, {url: 'http://i.memecaptain.com/gend_images/6Ao8JA.jpg'}]});
 }
 
 function memeRequest(request, tabId) {
@@ -63,6 +64,8 @@ function init() {
     }
     console.log('clientId ' + clientId);
   });
+  
+  chrome.browserAction.setPopup({popup: document.getElementById('slacky-panel').innerHTML});
   console.log('background page loaded');
 }
 
