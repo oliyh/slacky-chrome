@@ -84,7 +84,9 @@ function init() {
     console.log('clientId ' + clientId);
   });
   
-  chrome.browserAction.setPopup({popup: document.getElementById('slacky-panel').innerHTML});
+  chrome.browserAction.onClicked.addListener(function(tab) {
+    chrome.tabs.sendMessage(tab.id, {event: 'slackyPanelInvoked'});
+  }); 
   console.log('background page loaded');
 }
 

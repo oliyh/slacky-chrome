@@ -61,6 +61,10 @@ function onMemeGenerationFailed(response) {
   $('#error-container').show();
 }
 
+function onSlackyPanelInvoked(response) {
+  showSlackyPopover(null);
+}
+
 function initSlackyPanel() {
   initialiseVss();
   
@@ -154,6 +158,10 @@ function registerMemeEventListeners() {
               onMemeGenerationFailed(request);
               break;
 
+          case 'slackyPanelInvoked':
+            onSlackyPanelInvoked(request);
+            break;
+            
           default:
               console.log('Unknown event: ' + request + sender);
         }
