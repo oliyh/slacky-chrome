@@ -45,8 +45,10 @@ function onMemeGenerated(response) {
   $('#memeHistory').show();
   $('#meme-url').val(response.memeUrl);
   replaceFirstInCarousel(response.memeUrl);
-  var target = $('#' + response.target);
-  target.val(target.val().replace(memePattern, response.memeUrl));
+  if (target != null) {
+    var target = $('#' + response.target);
+    target.val(target.val().replace(memePattern, response.memeUrl));
+  }
 }
 
 function onBadMemeRequest(response) {
@@ -78,7 +80,7 @@ function initSlackyPanel() {
             $('#memeHistory').show();
 
             chrome.runtime.sendMessage({event: 'memeRequest',
-                                        target: target.attr('id'),
+                                        target: (target == null ? null : target.attr('id')),
                                         memeRequest: $(this).val()});
          } else if (event.which == 27) {
             console.log('user pressed esc');
