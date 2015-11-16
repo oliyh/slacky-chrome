@@ -33,9 +33,20 @@ function attachDomEventListeners() {
       var textJustTyped = userText.substring(0, doGetCaretPosition(event.target));
       if (memePattern.test(textJustTyped)) {
 
-        showSlackyPopover($(event.target));
+        showSlackyPopover($(event.target).attr('id'));
 
         console.log("Emitting memeDetected event");
+        chrome.runtime.sendMessage({event: 'memeDetected',
+                                    target: $(event.target).attr('id')});
+      }
+   });
+   
+   $('div[contenteditable]').keyup(function(event) {
+      console.log('key pressed');
+      var userText = event.target.textContent;
+      if (memePattern.test(userText)) {
+        showSlackyPopover($(event.target).attr('id'));
+        console.log("Emitting memeDetected event for" + $(event.target).attr('id'));
         chrome.runtime.sendMessage({event: 'memeDetected',
                                     target: $(event.target).attr('id')});
       }
@@ -46,9 +57,14 @@ function onMemeGenerated(response) {
   $('#memeHistory').show();
   $('#meme-url').val(response.memeUrl);
   replaceFirstInCarousel(response.memeUrl);
-  if (target != null) {
+  if (response.target != null) {
     var target = $('#' + response.target);
-    target.val(target.val().replace(memePattern, response.memeUrl));
+    if (target.attr('contenteditable')) {
+         console.log('inserting image');
+         target.append($('<img/>', {src: response.memeUrl}));
+      } else {
+         target.val(target.val().replace(memePattern, response.memeUrl));
+      }
   }
 }
 
@@ -85,7 +101,7 @@ function initSlackyPanel() {
             $('#memeHistory').show();
 
             chrome.runtime.sendMessage({event: 'memeRequest',
-                                        target: (target == null ? null : target.attr('id')),
+                                        target: (target == null ? null : target),
                                         memeRequest: $(this).val()});
          } else if (event.which == 27) {
             console.log('user pressed esc');
