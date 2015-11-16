@@ -17,7 +17,7 @@ function toggleControls() {
 }
 
 function slideCount() {
-   return $('#slides li').length;
+   return $('#slider #slides li').length;
 }
 
 function resizeToFit() {
@@ -51,7 +51,7 @@ function initialiseVss() {
   toggleControls();
 }
 
-jQuery(document).ready(initialiseVss);
+// jQuery(document).ready(initialiseVss);
 
 function slideTo(index) {
    var slideWidth = $('#slides li').width();

@@ -28,8 +28,10 @@
   width: 100%;
   font-size: 2em;
   padding: 0;
-  font-family: Arial;
   box-sizing: border-box;
+  line-height: 1em;
+  margin: 0;
+  border-radius: 0;
 }
 #slacky-popover img#meme {
   display: block;
@@ -76,6 +78,7 @@
   cursor: pointer;
   border: 0;
   border-radius: 2px;
+  line-height: 14px;
 }
 
 #slacky-popover button:hover {
@@ -128,5 +131,10 @@
 }
 
 #slacky-popover a.control:visited {
+  color: default;
+}
+
+#slacky-popover a.control:hover {
+  text-decoration: none;
   color: default;
 }

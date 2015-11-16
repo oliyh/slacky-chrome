@@ -35,8 +35,9 @@
       }
 
       #slides li img {
-        max-height: 220px;
+        max-height: 218px;
         max-width: 350px;
+        border: 1px solid white;
       }
 
       a.control_prev, a.control_next {
