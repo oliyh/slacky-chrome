@@ -18,7 +18,7 @@
   background-position: bottom;
   -webkit-box-shadow: 4px 4px 8px 1px rgba(0,0,0,0.75);
   box-shadow: 4px 4px 8px 1px rgba(0,0,0,0.75);
-  border: 1px solid white;
+  border: none;
 }
 
 #slacky-popover * {
@@ -31,6 +31,7 @@
   width: 100%;
   font-size: 2em;
   padding: 0;
+  padding-left: 4px;
   box-sizing: border-box;
   line-height: 1em;
   margin: 0;
