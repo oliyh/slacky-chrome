@@ -64,7 +64,11 @@ function onMemeGenerationFailed(response) {
 }
 
 function onSlackyPanelInvoked(response) {
-  showSlackyPopover(null);
+  if ($('#slacky-popover').is(":visible")) {
+    hideSlackyPopover();
+  } else {
+    showSlackyPopover(null);
+  }
 }
 
 function initSlackyPanel() {

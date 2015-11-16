@@ -21,12 +21,13 @@ function slideCount() {
 }
 
 function resizeToFit() {
-   var slideWidth = $('#slides li').width();
+   var slideWidth = $('#slider').width();
    var slideHeight = $('#slides li').height();
    var sliderUlWidth = slideCount() * slideWidth;
 
    $('#slider').css({width: slideWidth, height: slideHeight});
    $('#slides').css({width: sliderUlWidth, height: slideHeight});
+   $('#slides li').css({width: slideWidth});
 }
 
 function initialiseVss() {
