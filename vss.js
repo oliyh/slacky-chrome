@@ -81,11 +81,13 @@ function addSlide(slide) {
 
 function replaceSlide(index, slide) {
    $($('#slides li')[index]).replaceWith($(slide));
+   resizeToFit();
    slideTo(index);
 }
 
 function removeSlide(index) {
    $($('#slides li')[index]).remove();
    $($('#indicator li')[index]).remove();
+   resizeToFit();
    slideTo(0);
 }

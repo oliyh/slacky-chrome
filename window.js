@@ -1,5 +1,6 @@
 memePattern = new RegExp('\/meme', 'i');
 target = null;
+loadingUrl = null;
 
 function addToCarousel(memeUrl) {
    addSlide($('<li/>').append($('<img>', {src: memeUrl})));
@@ -80,7 +81,7 @@ function initSlackyPanel() {
          if (event.which == 13) {
             console.log('meme pattern completed');
             $('#error-container').hide();
-            addToCarousel(chrome.extension.getURL('loading.gif'));
+            addToCarousel(loadingUrl);
             $('#memeHistory').show();
 
             chrome.runtime.sendMessage({event: 'memeRequest',
@@ -144,6 +145,7 @@ function attachSlackyPanel() {
                                 $(document.body).append(body);
                                 initSlackyPanel();
                                 initMemeHistory(response.memeHistory);
+                                loadingUrl = response.loadingUrl;
                                    showSlackyPopover(null);
                              });
 }

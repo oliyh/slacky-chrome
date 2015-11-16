@@ -4,7 +4,8 @@ function requestPanelContent(request, sendResponse) {
   chrome.storage.sync.get('memeHistory', function(items) {
     var memeHistory = items.memeHistory;
     sendResponse({body: document.getElementById('slacky-panel').innerHTML,
-                  memeHistory: memeHistory || []});
+                  memeHistory: memeHistory || [],
+                  loadingUrl: chrome.extension.getURL('loading.gif')});
   });
   
 }

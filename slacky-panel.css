@@ -16,6 +16,9 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: bottom;
+  -webkit-box-shadow: 4px 4px 8px 1px rgba(0,0,0,0.75);
+  box-shadow: 4px 4px 8px 1px rgba(0,0,0,0.75);
+  border: 1px solid white;
 }
 
 #slacky-popover * {
