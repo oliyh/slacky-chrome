@@ -40,7 +40,7 @@ function attachDomEventListeners() {
                                     target: $(event.target).attr('id')});
       }
    });
-   
+
    $('div[contenteditable]').keyup(function(event) {
       console.log('key pressed');
       var userText = event.target.textContent;
@@ -90,7 +90,7 @@ function onSlackyPanelInvoked(response) {
 
 function initSlackyPanel() {
   initialiseVss();
-  
+
    $('#meme-input')
       .val('')
       .keyup(function(event) {
@@ -109,7 +109,7 @@ function initSlackyPanel() {
             target.focus();
          }
       });
-      
+
   $('#copy-meme-url').click(function (e) {
     $(document).one('copy', function(event) {
       event.originalEvent.clipboardData.setData('text', $('#meme-url').val());
@@ -117,7 +117,7 @@ function initSlackyPanel() {
     });
     var success = document.execCommand('copy', false, null);
   });
-  
+
   $('#copy-meme-data').click(function (e) {
     $(document).one('copy', function(event) {
       event.originalEvent.clipboardData.setData('text/html', '<img src="' + $('#meme-url').val() + '"/>');
@@ -126,16 +126,16 @@ function initSlackyPanel() {
     var success = document.execCommand('copy', false, null);
     console.log(success ? 'image copied' : 'could not copy image');
   });
-  
+
   $('#hide-error').click(function(e) {
     $('#error-container').hide();
   });
-  
+
   // hide slacky popover when click elsewhere
   $('html').click(function() {
     hideSlackyPopover();
   });
-  
+
   // stop clicks inside slacky popover from hiding it
   $('#slacky-popover').click(function(e) {
     e.stopPropagation();
@@ -162,7 +162,7 @@ function attachSlackyPanel() {
                                 initSlackyPanel();
                                 initMemeHistory(response.memeHistory);
                                 loadingUrl = response.loadingUrl;
-                                   showSlackyPopover(null);
+                                //showSlackyPopover(null);
                              });
 }
 
@@ -185,7 +185,7 @@ function registerMemeEventListeners() {
           case 'slackyPanelInvoked':
             onSlackyPanelInvoked(request);
             break;
-            
+
           default:
               console.log('Unknown event: ' + request + sender);
         }
