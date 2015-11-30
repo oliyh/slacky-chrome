@@ -12,7 +12,7 @@
     "default_popup": "panel.html"
   },
   "background": {
-    "page": "background.html"
+    "scripts": ["jquery.js", "utils.js", "index.js"]
   },
   "content_scripts": [
     {
