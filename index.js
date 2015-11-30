@@ -3,8 +3,7 @@ clientId = null;
 function requestPanelContent(request, sendResponse) {
   chrome.storage.sync.get('memeHistory', function(items) {
     var memeHistory = items.memeHistory;
-    sendResponse({body: document.getElementById('slacky-panel').innerHTML,
-                  memeHistory: memeHistory || [],
+    sendResponse({memeHistory: memeHistory || [],
                   loadingUrl: chrome.extension.getURL('loading.gif')});
   });
   
@@ -24,7 +23,7 @@ function storeMemeResult(result) {
   });
 }
 
-function memeRequest(request, tabId) {
+function memeRequest(request, sendResponse) {
    console.log('posting to slacky');
    $.ajax(
       {type: "POST",
@@ -34,26 +33,27 @@ function memeRequest(request, tabId) {
        success: function(response) {
           console.log('meme returned!');
           storeMemeResult({url: response});
-          chrome.tabs.sendMessage(tabId, {event: 'memeGenerated',
-                                          target: request.target,
-                                          memeUrl: response});
+          sendResponse({event: 'memeGenerated',
+                        target: request.target,
+                        memeUrl: response});
        },
        error: function(xhr, status, errorMsg) {
          switch (xhr.status) {
            case 400:
-            chrome.tabs.sendMessage(tabId, {event: 'badMemeRequest',
-                                            helpText: xhr.responseText});
+            sendResponse({event: 'badMemeRequest',
+                          helpText: xhr.responseText});
             break;
             
             default:
-            chrome.tabs.sendMessage(tabId, {event: 'memeGenerationFailed',
-                                            errorMsg: xhr.responseText});
+            sendResponse({event: 'memeGenerationFailed',
+                          errorMsg: xhr.responseText});
             break;
          }
        }});
 }
 
 function init() {
+  console.log("Initialising Slacky background process");
   chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
         switch(request.event) {
@@ -62,7 +62,7 @@ function init() {
               break;
 
           case 'memeRequest':
-              memeRequest(request, sender.tab.id);
+              memeRequest(request, sendResponse);
               break;
 
           default:
@@ -85,9 +85,9 @@ function init() {
     console.log('clientId ' + clientId);
   });
   
-  chrome.browserAction.onClicked.addListener(function(tab) {
-    chrome.tabs.sendMessage(tab.id, {event: 'slackyPanelInvoked'});
-  }); 
+  //chrome.browserAction.onClicked.addListener(function(tab) {
+  //  chrome.tabs.sendMessage(tab.id, {event: 'slackyPanelInvoked'});
+  //}); 
   console.log('background page loaded');
 }
 

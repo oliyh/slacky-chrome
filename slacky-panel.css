@@ -1,23 +1,20 @@
+html, body {
+  width: 360px;
+  height: 302px;
+  margin: 0;
+  padding: 0;
+}
+
 #slacky-popover {
   width: 360px;
   height: 302px;
   background-color: #15bcb7;
-  margin-top: 8px;
-  padding-bottom: 0;
-  margin-bottom: 0;
-  display: none;
-  position: fixed;
-  z-index: 10000;
-  right: 4px;
-  top: 0;
   font-family: Arial;
   font-size: 16px;
   background-image: url('chrome-extension://__MSG_@@extension_id__/businesscat.png');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: bottom;
-  -webkit-box-shadow: 4px 4px 8px 1px rgba(0,0,0,0.75);
-  box-shadow: 4px 4px 8px 1px rgba(0,0,0,0.75);
   border: none;
 }
 
@@ -113,21 +110,6 @@
   font-size: 2em;
   line-height: 0.5em;
   cursor: pointer;
-}
-
-#slacky-popover:after {
-  bottom: 100%;
-	right: 0;
-	border: solid transparent;
-	content: " ";
-	height: 0;
-	width: 0;
-	position: absolute;
-	pointer-events: none;
-	border-color: rgba(21, 188, 183, 0);
-	border-bottom-color: #15bcb7;
-	border-width: 7px;
-	margin-right: 35px;
 }
 
 #slacky-popover .control {

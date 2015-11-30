@@ -8,7 +8,8 @@
             "64": "slacky-64.png",
             "128": "slacky-128.png"},
   "browser_action": {
-    "default_icon": "slacky-64.png"
+    "default_icon": "slacky-64.png",
+    "default_popup": "panel.html"
   },
   "background": {
     "page": "background.html"
@@ -16,8 +17,7 @@
   "content_scripts": [
     {
       "matches": ["http://*/*", "https://*/*", "file://*/*"],
-      "js": ["jquery.js", "utils.js", "vss.js", "window.js"],
-      "css": ["slacky-panel.css", "vss.css"]
+      "js": ["jquery.js", "utils.js", "window.js"]
     }
   ],
   "permissions": [
