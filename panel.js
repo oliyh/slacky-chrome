@@ -1,6 +1,5 @@
 memePattern = new RegExp('\/meme', 'i');
 target = null;
-loadingUrl = null;
 
 function addToCarousel(memeUrl) {
    addSlide($('<li/>').append($('<img>', {src: memeUrl})));
@@ -8,23 +7,6 @@ function addToCarousel(memeUrl) {
 
 function replaceFirstInCarousel(memeUrl) {
    replaceSlide(0, $('<li/>').append($('<img>', {src: memeUrl})));
-}
-
-function showSlackyPopover(target) {
-  this.target = target;
-
-  if ($('#slides li').length > 0) {
-     $('#memeHistory').show();
-  } else {
-     $('#memeHistory').hide();
-  }
-  $('#error-container').hide();
-  $('#meme-input').val('').focus();
-  $('#slacky-popover').show();
-}
-
-function hideSlackyPopover() {
-   $('#slacky-popover').hide();
 }
 
 function onMemeGenerated(response) {
@@ -54,7 +36,7 @@ function initSlackyPanel() {
          if (event.which == 13) {
             console.log('meme pattern completed');
             $('#error-container').hide();
-            addToCarousel(loadingUrl);
+            addToCarousel('loading.gif');
             $('#memeHistory').show();
 
             chrome.runtime.sendMessage({event: 'memeRequest',
@@ -112,46 +94,17 @@ function initMemeHistory(memeHistory) {
   }
 }
 
-function attachSlackyPanel() {
-  chrome.runtime.sendMessage({event: 'requestPanelContent'},
+function populateMemeHistory() {
+  chrome.runtime.sendMessage({event: 'populateMemeHistory'},
                              function(response) {
-                                initSlackyPanel();
                                 initMemeHistory(response.memeHistory);
-                                loadingUrl = response.loadingUrl;
-                                //showSlackyPopover(null);
                              });
-}
-
-function registerExtensionEventListeners() {
-  chrome.runtime.onMessage.addListener(
-    function(request, sender, sendResponse) {
-        switch(request.event) {
-          case 'memeGenerated':
-              onMemeGenerated(request);
-              break;
-
-          case 'badMemeRequest':
-              onBadMemeRequest(request);
-              break;
-
-          case 'memeGenerationFailed':
-              onMemeGenerationFailed(request);
-              break;
-
-          case 'slackyPanelInvoked':
-            onSlackyPanelInvoked(request);
-            break;
-
-          default:
-              console.log('Unknown event: ' + request + sender);
-        }
-    });
 }
 
 function init() {
    console.log("Initialising Slacky panel");
-   attachSlackyPanel();
-   registerExtensionEventListeners();
+   initSlackyPanel();
+   populateMemeHistory();
 }
 
-init();
+jQuery(document).ready(init);

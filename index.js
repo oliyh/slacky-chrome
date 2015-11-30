@@ -1,12 +1,10 @@
 clientId = null;
 
-function requestPanelContent(request, sendResponse) {
+function populateMemeHistory(request, sendResponse) {
   chrome.storage.sync.get('memeHistory', function(items) {
     var memeHistory = items.memeHistory;
-    sendResponse({memeHistory: memeHistory || [],
-                  loadingUrl: chrome.extension.getURL('loading.gif')});
+    sendResponse({memeHistory: memeHistory || []});
   });
-  
 }
 
 function storeMemeResult(result) {
@@ -57,8 +55,8 @@ function init() {
   chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
         switch(request.event) {
-          case 'requestPanelContent':
-              requestPanelContent(request, sendResponse);
+          case 'populateMemeHistory':
+              populateMemeHistory(request, sendResponse);
               break;
 
           case 'memeRequest':
